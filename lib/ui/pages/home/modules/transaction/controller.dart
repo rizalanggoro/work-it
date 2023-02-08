@@ -16,6 +16,16 @@ class HomeTransactionController extends GetxController {
 
   void toCreateTransaction() => Get.toNamed(Routes.createTransaction);
 
+  void toDetailTransaction({
+    required TransactionCollection collection,
+  }) =>
+      Get.toNamed(
+        Routes.detailTransaction,
+        arguments: {
+          'collection': collection,
+        },
+      );
+
   void deleteTransaction({
     required TransactionCollection collection,
   }) async {
