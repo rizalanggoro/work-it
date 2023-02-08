@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:work_it/app/routes.dart';
 import 'package:work_it/app/services/theme.dart';
 
