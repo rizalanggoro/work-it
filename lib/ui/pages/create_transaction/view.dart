@@ -66,7 +66,7 @@ class CreateTransactionView extends GetView<CreateTransactionController> {
 
             // todo: category
             ListTile(
-              onTap: () => _showBottomSheetSelectTransactionCategory(context),
+              onTap: () => controller.toSelectTransactionCategory(),
               leading: const CircleAvatar(
                 child: Icon(Icons.category_rounded),
               ),
@@ -240,6 +240,7 @@ class CreateTransactionView extends GetView<CreateTransactionController> {
     }
   }
 
+  @Deprecated('use select transaction category page')
   void _showBottomSheetSelectTransactionCategory(BuildContext context) {
     var colorScheme = context.theme.colorScheme;
     var textTheme = context.textTheme;

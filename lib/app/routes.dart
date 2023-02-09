@@ -16,6 +16,8 @@ import 'package:work_it/ui/pages/manage_transaction_category/binding.dart';
 import 'package:work_it/ui/pages/manage_transaction_category/view.dart';
 import 'package:work_it/ui/pages/manage_wallet/binding.dart';
 import 'package:work_it/ui/pages/manage_wallet/view.dart';
+import 'package:work_it/ui/pages/select_transaction_category/binding.dart';
+import 'package:work_it/ui/pages/select_transaction_category/view.dart';
 
 abstract class Routes {
   static const home = '/';
@@ -28,6 +30,8 @@ abstract class Routes {
   static const manageWallet = '/manage-wallet';
 
   static const detailTransaction = '/detail-transaction';
+
+  static const selectTransactionCategory = '/select-transaction-category';
 
   static final pages = [
     GetPage(
@@ -75,6 +79,13 @@ abstract class Routes {
       name: detailTransaction,
       page: () => const DetailTransactionView(),
       binding: DetailTransactionBinding(),
+    ),
+
+    // todo: select
+    GetPage(
+      name: selectTransactionCategory,
+      page: () => const SelectTransactionCategoryView(),
+      binding: SelectTransactionCategoryBinding(),
     ),
   ];
 }
