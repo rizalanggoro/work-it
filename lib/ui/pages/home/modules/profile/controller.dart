@@ -33,6 +33,7 @@ class HomeProfileController extends GetxController {
   void toCheckRelease() async {
     await launchUrlString(
       'https://github.com/rizalanggoro/work-it/releases',
+      mode: LaunchMode.externalApplication,
     );
   }
 

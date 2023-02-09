@@ -2,13 +2,13 @@ name: work_it
 description: A new Flutter project.
 publish_to: 'none'
 
-version: 1.0.5+4
+version: 1.0.6+5
 
 scripts:
   collection: "flutter pub run build_runner build"
   done: "rps build && rps release"
   build: "flutter build apk --split-per-abi"
-  release: "gh release create v1.0.5 build/app/outputs/flutter-apk/app-arm64-v8a-release.apk build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk"
+  release: "gh release create v1.0.6 build/app/outputs/flutter-apk/app-arm64-v8a-release.apk build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk"
 
 environment:
   sdk: '>=2.19.0-444.6.beta <3.0.0'
