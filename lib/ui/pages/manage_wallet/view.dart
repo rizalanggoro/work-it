@@ -14,6 +14,10 @@ class ManageWalletView extends GetView<ManageWalletController> {
       appBar: AppBar(
         title: const Text('Wallet'),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add_rounded),
+        onPressed: () => controller.toCreateWallet(),
+      ),
     );
   }
 }

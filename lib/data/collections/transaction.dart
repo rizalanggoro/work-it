@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:work_it/data/collections/transaction_category.dart';
+import 'package:work_it/data/collections/wallet.dart';
 
 part 'transaction.g.dart';
 
@@ -12,6 +13,9 @@ class TransactionCollection {
   int date;
 
   final category = IsarLink<TransactionCategoryCollection>();
+
+  @Backlink(to: 'transactions')
+  final wallet = IsarLink<WalletCollection>();
 
   TransactionCollection({
     required this.amount,

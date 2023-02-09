@@ -3,6 +3,8 @@ import 'package:work_it/ui/pages/create_transaction/binding.dart';
 import 'package:work_it/ui/pages/create_transaction/view.dart';
 import 'package:work_it/ui/pages/create_transaction_category/binding.dart';
 import 'package:work_it/ui/pages/create_transaction_category/view.dart';
+import 'package:work_it/ui/pages/create_wallet/binding.dart';
+import 'package:work_it/ui/pages/create_wallet/view.dart';
 import 'package:work_it/ui/pages/detail_transaction/binding.dart';
 import 'package:work_it/ui/pages/detail_transaction/view.dart';
 import 'package:work_it/ui/pages/home/binding.dart';
@@ -16,8 +18,10 @@ import 'package:work_it/ui/pages/manage_wallet/view.dart';
 
 abstract class Routes {
   static const home = '/';
+
   static const createTransaction = '/create-transaction';
   static const createTransactionCategory = '/create-transaction-category';
+  static const createWallet = '/create-wallet';
 
   static const manageTransactionCategory = '/manage-transaction-category';
   static const manageWallet = '/manage-wallet';
@@ -45,6 +49,11 @@ abstract class Routes {
       name: createTransactionCategory,
       page: () => const CreateTransactionCategoryView(),
       binding: CreateTransactionCategoryBinding(),
+    ),
+    GetPage(
+      name: createWallet,
+      page: () => const CreateWalletView(),
+      binding: CreateWalletBinding(),
     ),
 
     // todo: manage
