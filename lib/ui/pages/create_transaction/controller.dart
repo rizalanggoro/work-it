@@ -48,19 +48,22 @@ class CreateTransactionController extends GetxController {
     var amount = controllerAmount.text;
     var note = controllerNote.text;
 
-    var collection = TransactionCollection(
-      amount: double.parse(amount),
-      note: note,
-      date: transactionDate.value.millisecondsSinceEpoch,
-    );
-    collection.category.value = transactionCategory.value;
+    if (transactionCategory.value != null && wallet.value != null) {
+      var collection = TransactionCollection(
+        amount: amount.isNotEmpty ? double.parse(amount) : 0,
+        note: note,
+        date: transactionDate.value.millisecondsSinceEpoch,
+      );
+      collection.category.value = transactionCategory.value;
+      collection.wallet.value = wallet.value;
 
-    var result = await transactionRepository.create(
-      collection: collection,
-    );
+      var result = await transactionRepository.create(
+        collection: collection,
+      );
 
-    if (result.success) {
-      Get.back();
+      if (result.success) {
+        Get.back();
+      }
     }
   }
 }

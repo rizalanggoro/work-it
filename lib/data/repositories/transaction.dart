@@ -24,6 +24,7 @@ class TransactionRepository {
       await isar.writeTxn(() async {
         await isar.transactionCollections.put(collection);
         await collection.category.save();
+        await collection.wallet.save();
       });
 
       return TransactionResult(success: true);
