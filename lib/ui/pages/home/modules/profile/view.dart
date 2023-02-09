@@ -11,6 +11,9 @@ class HomeProfileView extends GetView<HomeProfileController> {
     var colorScheme = context.theme.colorScheme;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profile'),
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

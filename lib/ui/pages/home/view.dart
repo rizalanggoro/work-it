@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_it/ui/pages/home/controller.dart';
+import 'package:work_it/ui/pages/home/modules/dashboard/view.dart';
 import 'package:work_it/ui/pages/home/modules/profile/view.dart';
 import 'package:work_it/ui/pages/home/modules/transaction/view.dart';
 
@@ -23,6 +24,11 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     const navItems = [
       _NavItem(
+        title: 'Dashboard',
+        icon: Icons.dashboard_rounded,
+        view: HomeDashboardView(),
+      ),
+      _NavItem(
         title: 'Transaction',
         icon: Icons.wallet_rounded,
         view: HomeTransactionView(),
@@ -35,9 +41,6 @@ class HomeView extends GetView<HomeController> {
     ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('WorkIt'),
-      ),
       bottomNavigationBar: ObxValue(
         (navigationIndex) => NavigationBar(
           selectedIndex: navigationIndex.value,

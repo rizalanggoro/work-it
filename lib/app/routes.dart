@@ -8,6 +8,7 @@ import 'package:work_it/ui/pages/create_wallet/view.dart';
 import 'package:work_it/ui/pages/detail_transaction/binding.dart';
 import 'package:work_it/ui/pages/detail_transaction/view.dart';
 import 'package:work_it/ui/pages/home/binding.dart';
+import 'package:work_it/ui/pages/home/modules/dashboard/binding.dart';
 import 'package:work_it/ui/pages/home/modules/profile/binding.dart';
 import 'package:work_it/ui/pages/home/modules/transaction/binding.dart';
 import 'package:work_it/ui/pages/home/view.dart';
@@ -34,6 +35,7 @@ abstract class Routes {
       page: () => const HomeView(),
       bindings: [
         HomeBinding(),
+        HomeDashboardBinding(),
         HomeTransactionBinding(),
         HomeProfileBinding(),
       ],
