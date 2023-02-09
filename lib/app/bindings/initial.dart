@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:work_it/app/services/theme.dart';
 import 'package:work_it/app/services/transaction.dart';
+import 'package:work_it/app/services/wallet.dart';
 import 'package:work_it/data/providers/isar.dart';
 import 'package:work_it/data/repositories/transaction.dart';
 import 'package:work_it/data/repositories/transaction_category.dart';
@@ -17,6 +18,7 @@ class InitialBinding extends Bindings {
       isarProvider: Get.find(),
     ));
 
+    // todo: services
     Get.put(ThemeService(), permanent: true);
     Get.put(
       TransactionService(
@@ -25,5 +27,6 @@ class InitialBinding extends Bindings {
       ),
       permanent: true,
     );
+    Get.put(WalletService(), permanent: true);
   }
 }

@@ -8,10 +8,12 @@ class WalletCollection {
   final Id id = Isar.autoIncrement;
 
   String name;
+  double initialAmount;
 
   final transactions = IsarLinks<TransactionCollection>();
 
   WalletCollection({
     required this.name,
+    required this.initialAmount,
   });
 }

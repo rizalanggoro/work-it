@@ -17,8 +17,13 @@ const WalletCollectionSchema = CollectionSchema(
   name: r'WalletCollection',
   id: -1578947295060201414,
   properties: {
-    r'name': PropertySchema(
+    r'initialAmount': PropertySchema(
       id: 0,
+      name: r'initialAmount',
+      type: IsarType.double,
+    ),
+    r'name': PropertySchema(
+      id: 1,
       name: r'name',
       type: IsarType.string,
     )
@@ -60,7 +65,8 @@ void _walletCollectionSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.name);
+  writer.writeDouble(offsets[0], object.initialAmount);
+  writer.writeString(offsets[1], object.name);
 }
 
 WalletCollection _walletCollectionDeserialize(
@@ -70,7 +76,8 @@ WalletCollection _walletCollectionDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = WalletCollection(
-    name: reader.readString(offsets[0]),
+    initialAmount: reader.readDouble(offsets[0]),
+    name: reader.readString(offsets[1]),
   );
   return object;
 }
@@ -83,6 +90,8 @@ P _walletCollectionDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
+      return (reader.readDouble(offset)) as P;
+    case 1:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -236,6 +245,72 @@ extension WalletCollectionQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<WalletCollection, WalletCollection, QAfterFilterCondition>
+      initialAmountEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'initialAmount',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<WalletCollection, WalletCollection, QAfterFilterCondition>
+      initialAmountGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'initialAmount',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<WalletCollection, WalletCollection, QAfterFilterCondition>
+      initialAmountLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'initialAmount',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<WalletCollection, WalletCollection, QAfterFilterCondition>
+      initialAmountBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'initialAmount',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
       ));
     });
   }
@@ -446,6 +521,20 @@ extension WalletCollectionQueryLinks
 
 extension WalletCollectionQuerySortBy
     on QueryBuilder<WalletCollection, WalletCollection, QSortBy> {
+  QueryBuilder<WalletCollection, WalletCollection, QAfterSortBy>
+      sortByInitialAmount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'initialAmount', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WalletCollection, WalletCollection, QAfterSortBy>
+      sortByInitialAmountDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'initialAmount', Sort.desc);
+    });
+  }
+
   QueryBuilder<WalletCollection, WalletCollection, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -475,6 +564,20 @@ extension WalletCollectionQuerySortThenBy
     });
   }
 
+  QueryBuilder<WalletCollection, WalletCollection, QAfterSortBy>
+      thenByInitialAmount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'initialAmount', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WalletCollection, WalletCollection, QAfterSortBy>
+      thenByInitialAmountDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'initialAmount', Sort.desc);
+    });
+  }
+
   QueryBuilder<WalletCollection, WalletCollection, QAfterSortBy> thenByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -491,6 +594,13 @@ extension WalletCollectionQuerySortThenBy
 
 extension WalletCollectionQueryWhereDistinct
     on QueryBuilder<WalletCollection, WalletCollection, QDistinct> {
+  QueryBuilder<WalletCollection, WalletCollection, QDistinct>
+      distinctByInitialAmount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'initialAmount');
+    });
+  }
+
   QueryBuilder<WalletCollection, WalletCollection, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -504,6 +614,13 @@ extension WalletCollectionQueryProperty
   QueryBuilder<WalletCollection, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<WalletCollection, double, QQueryOperations>
+      initialAmountProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'initialAmount');
     });
   }
 
