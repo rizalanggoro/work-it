@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_it/ui/pages/home/modules/dashboard/controller.dart';
+import 'package:work_it/ui/pages/home/modules/dashboard/widgets/today_transaction.dart';
 
 class HomeDashboardView extends GetView<HomeDashboardController> {
   const HomeDashboardView({super.key});
@@ -17,7 +18,9 @@ class HomeDashboardView extends GetView<HomeDashboardController> {
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [],
+          children: [
+            const HomeDashboardTodayTransaction(),
+          ],
         ),
       ),
     );

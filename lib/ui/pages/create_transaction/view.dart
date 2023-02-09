@@ -309,7 +309,7 @@ class CreateTransactionView extends GetView<CreateTransactionController> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                 ),
-                controller.transactionService.incomeTransactionCategory,
+                controller.transactionService.incomeTransactionCategories,
               ),
 
               // todo: spent
@@ -359,7 +359,7 @@ class CreateTransactionView extends GetView<CreateTransactionController> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                 ),
-                controller.transactionService.spentTransactionCategory,
+                controller.transactionService.spentTransactionCategories,
               ),
 
               // todo: spacer

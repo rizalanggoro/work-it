@@ -45,6 +45,31 @@ class TransactionRepository {
     return await isar.transactionCollections.where().findAll();
   }
 
+  Future<List<TransactionCollection>> readAllToday() async {
+    var isar = await isarProvider.openIsarInstance();
+
+    var currentDate = DateTime.now();
+    var firstDate = DateTime(
+      currentDate.year,
+      currentDate.month,
+      currentDate.day - 1,
+    );
+    var lastDate = DateTime(
+      currentDate.year,
+      currentDate.month,
+      currentDate.day + 1,
+    );
+
+    var firstDateEpoch = firstDate.millisecondsSinceEpoch;
+    var lastDateEpoch = lastDate.millisecondsSinceEpoch;
+
+    return await isar.transactionCollections
+        .filter()
+        .dateGreaterThan(firstDateEpoch)
+        .dateLessThan(lastDateEpoch)
+        .findAll();
+  }
+
   Future<TransactionResult> deleteById({
     required int id,
   }) async {
@@ -68,5 +93,30 @@ class TransactionRepository {
   Stream<List<TransactionCollection>> stream() async* {
     var isar = await isarProvider.openIsarInstance();
     yield* isar.transactionCollections.where().watch();
+  }
+
+  Stream<List<TransactionCollection>> streamToday() async* {
+    var isar = await isarProvider.openIsarInstance();
+
+    var currentDate = DateTime.now();
+    var firstDate = DateTime(
+      currentDate.year,
+      currentDate.month,
+      currentDate.day - 1,
+    );
+    var lastDate = DateTime(
+      currentDate.year,
+      currentDate.month,
+      currentDate.day + 1,
+    );
+
+    var firstDateEpoch = firstDate.millisecondsSinceEpoch;
+    var lastDateEpoch = lastDate.millisecondsSinceEpoch;
+
+    yield* isar.transactionCollections
+        .filter()
+        .dateGreaterThan(firstDateEpoch)
+        .dateLessThan(lastDateEpoch)
+        .watch();
   }
 }

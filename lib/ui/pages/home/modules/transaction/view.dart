@@ -39,7 +39,7 @@ class HomeTransactionView extends GetView<HomeTransactionController> {
                   physics: const NeverScrollableScrollPhysics(),
                 );
               },
-              controller.transactionService.mapTransaction,
+              controller.transactionService.mapTransactions,
             ),
           ],
         ),

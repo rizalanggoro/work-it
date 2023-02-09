@@ -5,6 +5,8 @@ import 'controller.dart';
 class HomeDashboardBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(HomeDashboardController());
+    Get.put(HomeDashboardController(
+      transactionService: Get.find(),
+    ));
   }
 }
