@@ -2,7 +2,7 @@ name: work_it
 description: A new Flutter project.
 publish_to: 'none'
 
-version: 1.0.2+2
+version: 1.0.4+3
 
 scripts:
   collection: "flutter pub run build_runner build"
@@ -24,6 +24,8 @@ dependencies:
   intl: ^0.18.0
   isar: ^3.0.5
   isar_flutter_libs: ^3.0.5
+  package_info_plus: ^3.0.2
+  url_launcher: ^6.1.9
 
 dev_dependencies:
   flutter_test:

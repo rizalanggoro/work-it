@@ -36,10 +36,19 @@ class HomeProfileView extends GetView<HomeProfileController> {
             ),
             ListTile(
               onTap: () => controller.switchBrightness(),
+              leading: const CircleAvatar(
+                child: Icon(Icons.dark_mode_rounded),
+              ),
               title: Text(
                 'Dark theme',
                 style: TextStyle(
                   color: colorScheme.onBackground,
+                ),
+              ),
+              subtitle: Text(
+                'Use dark mode for more eye-friendly conditions',
+                style: TextStyle(
+                  color: colorScheme.onBackground.withOpacity(.64),
                 ),
               ),
               trailing: ObxValue(
@@ -48,6 +57,45 @@ class HomeProfileView extends GetView<HomeProfileController> {
                   onChanged: (value) => controller.switchBrightness(),
                 ),
                 controller.themeService.darkMode,
+              ),
+            ),
+            ListTile(
+              onTap: () => controller.toCheckRelease(),
+              leading: const CircleAvatar(
+                child: Icon(Icons.update_rounded),
+              ),
+              title: Text(
+                'Release',
+                style: TextStyle(
+                  color: colorScheme.onBackground,
+                ),
+              ),
+              subtitle: Text(
+                'Check the latest release from the github repository',
+                style: TextStyle(
+                  color: colorScheme.onBackground.withOpacity(.64),
+                ),
+              ),
+              trailing: const Icon(Icons.chevron_right_rounded),
+            ),
+            ListTile(
+              leading: const CircleAvatar(
+                child: Icon(Icons.code_rounded),
+              ),
+              title: Text(
+                'Version',
+                style: TextStyle(
+                  color: colorScheme.onBackground,
+                ),
+              ),
+              subtitle: ObxValue(
+                (version) => Text(
+                  version.value,
+                  style: TextStyle(
+                    color: colorScheme.onBackground.withOpacity(.64),
+                  ),
+                ),
+                controller.version,
               ),
             ),
 
