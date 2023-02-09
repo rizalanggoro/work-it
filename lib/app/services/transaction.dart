@@ -15,13 +15,14 @@ class TransactionService extends GetxService {
   });
 
   // todo: transaction
-  final RxList<TransactionCollection> transaction = RxList([]);
-  final RxMap<String, List<TransactionCollection>> mapTransaction = RxMap({});
+  final RxList<TransactionCollection> transactions = RxList([]);
+  final RxList<TransactionCollection> todayTransactions = RxList([]);
+  final RxMap<String, List<TransactionCollection>> mapTransactions = RxMap({});
 
   // todo: transaction category
-  final RxList<TransactionCategoryCollection> incomeTransactionCategory =
+  final RxList<TransactionCategoryCollection> incomeTransactionCategories =
       RxList([]);
-  final RxList<TransactionCategoryCollection> spentTransactionCategory =
+  final RxList<TransactionCategoryCollection> spentTransactionCategories =
       RxList([]);
 
   @override
@@ -33,9 +34,10 @@ class TransactionService extends GetxService {
   }
 
   void _read() async {
-    transaction.value = await transactionRepository.readAll();
-    mapTransaction.value = groupBy(
-      transaction,
+    transactions.value = await transactionRepository.readAll();
+    todayTransactions.value = await transactionRepository.readAllToday();
+    mapTransactions.value = groupBy(
+      transactions,
       (collection) {
         var transactionDate = DateTime.fromMillisecondsSinceEpoch(
           collection.date,
@@ -51,16 +53,16 @@ class TransactionService extends GetxService {
       },
     );
 
-    incomeTransactionCategory.value =
+    incomeTransactionCategories.value =
         await transactionCategoryRepository.readIncome();
-    spentTransactionCategory.value =
+    spentTransactionCategories.value =
         await transactionCategoryRepository.readSpent();
   }
 
   void _listen() {
     transactionRepository.stream().listen((event) {
-      transaction.value = event;
-      mapTransaction.value = groupBy(
+      transactions.value = event;
+      mapTransactions.value = groupBy(
         event,
         (collection) {
           var transactionDate =
@@ -76,11 +78,16 @@ class TransactionService extends GetxService {
       );
     });
 
+    // todo: today's transaction
+    transactionRepository
+        .streamToday()
+        .listen((event) => todayTransactions.value = event);
+
     transactionCategoryRepository
         .streamIncome()
-        .listen((event) => incomeTransactionCategory.value = event);
+        .listen((event) => incomeTransactionCategories.value = event);
     transactionCategoryRepository
         .streamSpent()
-        .listen((event) => spentTransactionCategory.value = event);
+        .listen((event) => spentTransactionCategories.value = event);
   }
 }

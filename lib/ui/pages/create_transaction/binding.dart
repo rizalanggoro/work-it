@@ -14,6 +14,7 @@ class CreateTransactionBinding extends Bindings {
 
     Get.put(CreateTransactionController(
       transactionService: Get.find(),
+      walletService: Get.find(),
       transactionRepository: Get.find(),
     ));
   }

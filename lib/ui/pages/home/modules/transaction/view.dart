@@ -12,6 +12,9 @@ class HomeTransactionView extends GetView<HomeTransactionController> {
     var textTheme = context.textTheme;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Transaction'),
+      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_rounded),
         onPressed: () => controller.toCreateTransaction(),
@@ -36,7 +39,7 @@ class HomeTransactionView extends GetView<HomeTransactionController> {
                   physics: const NeverScrollableScrollPhysics(),
                 );
               },
-              controller.transactionService.mapTransaction,
+              controller.transactionService.mapTransactions,
             ),
           ],
         ),

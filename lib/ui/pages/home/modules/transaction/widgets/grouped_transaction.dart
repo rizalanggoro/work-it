@@ -89,9 +89,6 @@ class GroupedTransactionWidget extends GetView<HomeTransactionController> {
                   categoryCollection?.transactionType == TransactionType.income;
 
               return ListTile(
-                onLongPress: () => controller.deleteTransaction(
-                  collection: collection,
-                ),
                 onTap: () => controller.toDetailTransaction(
                   collection: collection,
                 ),

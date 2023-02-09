@@ -66,7 +66,7 @@ class ManageTransactionCategoryView
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
               ),
-              controller.transactionService.incomeTransactionCategory,
+              controller.transactionService.incomeTransactionCategories,
             ),
 
             // todo: spent
@@ -110,7 +110,7 @@ class ManageTransactionCategoryView
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
               ),
-              controller.transactionService.spentTransactionCategory,
+              controller.transactionService.spentTransactionCategories,
             ),
           ],
         ),

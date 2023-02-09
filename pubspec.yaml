@@ -2,7 +2,13 @@ name: work_it
 description: A new Flutter project.
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.5+4
+
+scripts:
+  collection: "flutter pub run build_runner build"
+  done: "rps build && rps release"
+  build: "flutter build apk --split-per-abi"
+  release: "gh release create v1.0.5 build/app/outputs/flutter-apk/app-arm64-v8a-release.apk build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk"
 
 environment:
   sdk: '>=2.19.0-444.6.beta <3.0.0'
@@ -18,6 +24,8 @@ dependencies:
   intl: ^0.18.0
   isar: ^3.0.5
   isar_flutter_libs: ^3.0.5
+  package_info_plus: ^3.0.2
+  url_launcher: ^6.1.9
 
 dev_dependencies:
   flutter_test:

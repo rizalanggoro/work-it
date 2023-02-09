@@ -6,6 +6,7 @@ import 'package:work_it/app/bindings/initial.dart';
 import 'package:work_it/app/routes.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
 
   runApp(const MyApp());
