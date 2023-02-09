@@ -48,4 +48,14 @@ class WalletRepository {
       message: message,
     );
   }
+
+  Future<List<WalletCollection>> readAll() async {
+    var isar = await isarProvider.openIsarInstance();
+    return await isar.walletCollections.where().sortByName().findAll();
+  }
+
+  Stream<List<WalletCollection>> stream() async* {
+    var isar = await isarProvider.openIsarInstance();
+    yield* isar.walletCollections.where().sortByName().watch();
+  }
 }

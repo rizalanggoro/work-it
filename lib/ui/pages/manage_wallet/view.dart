@@ -18,6 +18,33 @@ class ManageWalletView extends GetView<ManageWalletController> {
         child: const Icon(Icons.add_rounded),
         onPressed: () => controller.toCreateWallet(),
       ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ObxValue(
+              (wallets) => ListView.builder(
+                itemBuilder: (context, index) {
+                  var collection = wallets[index];
+
+                  return ListTile(
+                    title: Text(
+                      collection.name,
+                      style: TextStyle(
+                        color: colorScheme.onBackground,
+                      ),
+                    ),
+                  );
+                },
+                itemCount: wallets.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+              ),
+              controller.walletService.wallets,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
