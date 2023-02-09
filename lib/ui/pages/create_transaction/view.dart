@@ -64,6 +64,30 @@ class CreateTransactionView extends GetView<CreateTransactionController> {
               ),
             ),
 
+            // todo: category
+            ListTile(
+              onTap: () => _showBottomSheetSelectTransactionCategory(context),
+              leading: const CircleAvatar(
+                child: Icon(Icons.category_rounded),
+              ),
+              title: Text(
+                'Category',
+                style: TextStyle(
+                  color: colorScheme.onBackground,
+                ),
+              ),
+              subtitle: ObxValue(
+                (transactionCategory) => Text(
+                  transactionCategory.value?.name ?? 'No category selected',
+                  style: TextStyle(
+                    color: colorScheme.onBackground.withOpacity(.64),
+                  ),
+                ),
+                controller.transactionCategory,
+              ),
+              trailing: const Icon(Icons.chevron_right_rounded),
+            ),
+
             // todo: date
             ListTile(
               onTap: () => _showDatePicker(context),
@@ -90,26 +114,26 @@ class CreateTransactionView extends GetView<CreateTransactionController> {
               trailing: const Icon(Icons.chevron_right_rounded),
             ),
 
-            // todo: category
+            // todo: wallet
             ListTile(
-              onTap: () => _showBottomSheetSelectTransactionCategory(context),
+              onTap: () => _showBottomSheetSelectWallet(context),
               leading: const CircleAvatar(
-                child: Icon(Icons.category_rounded),
+                child: Icon(Icons.wallet_rounded),
               ),
               title: Text(
-                'Category',
+                'Wallet',
                 style: TextStyle(
                   color: colorScheme.onBackground,
                 ),
               ),
               subtitle: ObxValue(
-                (transactionCategory) => Text(
-                  transactionCategory.value?.name ?? 'No category selected',
+                (wallet) => Text(
+                  wallet.value?.name ?? 'No wallet selected',
                   style: TextStyle(
                     color: colorScheme.onBackground.withOpacity(.64),
                   ),
                 ),
-                controller.transactionCategory,
+                controller.wallet,
               ),
               trailing: const Icon(Icons.chevron_right_rounded),
             ),
@@ -130,6 +154,72 @@ class CreateTransactionView extends GetView<CreateTransactionController> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showBottomSheetSelectWallet(BuildContext context) {
+    var textTheme = context.textTheme;
+    var colorScheme = context.theme.colorScheme;
+
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  'Select wallet',
+                  style: TextStyle(
+                    color: colorScheme.onBackground,
+                    fontSize: textTheme.titleLarge!.fontSize,
+                  ),
+                ),
+              ),
+
+              // todo: list wallet
+              ObxValue(
+                (wallets) => ListView.builder(
+                  itemBuilder: (context, index) {
+                    var collection = wallets[index];
+                    var isSelected =
+                        controller.wallet.value?.id == collection.id;
+
+                    return ListTile(
+                      onTap: () => controller.changeWallet(
+                        collection: collection,
+                      ),
+                      leading: Icon(
+                        isSelected
+                            ? Icons.radio_button_on_rounded
+                            : Icons.radio_button_off_rounded,
+                        color: isSelected
+                            ? colorScheme.primary
+                            : colorScheme.secondary,
+                      ),
+                      title: Text(
+                        collection.name,
+                        style: TextStyle(
+                          color: colorScheme.onBackground,
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: wallets.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                ),
+                controller.walletService.wallets,
+              ),
+
+              // todo: spacer
+              const SizedBox(height: 16),
+            ],
+          ),
+        );
+      },
     );
   }
 
