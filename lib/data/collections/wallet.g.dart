@@ -79,6 +79,7 @@ WalletCollection _walletCollectionDeserialize(
     initialAmount: reader.readDouble(offsets[0]),
     name: reader.readString(offsets[1]),
   );
+  object.id = id;
   return object;
 }
 
@@ -108,6 +109,7 @@ List<IsarLinkBase<dynamic>> _walletCollectionGetLinks(WalletCollection object) {
 
 void _walletCollectionAttach(
     IsarCollection<dynamic> col, Id id, WalletCollection object) {
+  object.id = id;
   object.transactions.attach(
       col, col.isar.collection<TransactionCollection>(), r'transactions', id);
 }

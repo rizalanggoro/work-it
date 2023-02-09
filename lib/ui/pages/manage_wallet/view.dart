@@ -34,6 +34,18 @@ class ManageWalletView extends GetView<ManageWalletController> {
                         color: colorScheme.onBackground,
                       ),
                     ),
+                    subtitle: Text(
+                      'ID: ${collection.id.toString()}',
+                      style: TextStyle(
+                        color: colorScheme.onBackground.withOpacity(.64),
+                      ),
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete_rounded),
+                      onPressed: () => controller.deleteWallet(
+                        collection: collection,
+                      ),
+                    ),
                   );
                 },
                 itemCount: wallets.length,

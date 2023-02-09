@@ -5,7 +5,7 @@ part 'wallet.g.dart';
 
 @collection
 class WalletCollection {
-  final Id id = Isar.autoIncrement;
+  Id id = Isar.autoIncrement;
 
   String name;
   double initialAmount;

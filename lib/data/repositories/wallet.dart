@@ -49,6 +49,34 @@ class WalletRepository {
     );
   }
 
+  Future<WalletResult> deleteById({
+    required int id,
+  }) async {
+    String? message;
+
+    try {
+      var isar = await isarProvider.openIsarInstance();
+
+      var success = await isar.writeTxn(() async {
+        return await isar.walletCollections.delete(id);
+      });
+
+      return WalletResult(success: success);
+    } catch (error) {
+      message = 'Something went wrong! Please try again later...';
+
+      dev.log(
+        error.toString(),
+        name: _devName,
+      );
+    }
+
+    return WalletResult(
+      success: false,
+      message: message,
+    );
+  }
+
   Future<List<WalletCollection>> readAll() async {
     var isar = await isarProvider.openIsarInstance();
     return await isar.walletCollections.where().sortByName().findAll();
