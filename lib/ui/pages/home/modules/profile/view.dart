@@ -87,6 +87,29 @@ class HomeProfileView extends GetView<HomeProfileController> {
                 Icons.chevron_right_rounded,
               ),
             ),
+            ListTile(
+              onTap: () => controller.toManageWallet(),
+              leading: const CircleAvatar(
+                child: Icon(
+                  Icons.wallet_rounded,
+                ),
+              ),
+              title: Text(
+                'Manage wallet',
+                style: TextStyle(
+                  color: colorScheme.onBackground,
+                ),
+              ),
+              subtitle: Text(
+                'Create, update, delete wallet',
+                style: TextStyle(
+                  color: colorScheme.onBackground.withOpacity(.64),
+                ),
+              ),
+              trailing: const Icon(
+                Icons.chevron_right_rounded,
+              ),
+            ),
           ],
         ),
       ),

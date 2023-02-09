@@ -4,6 +4,11 @@ publish_to: 'none'
 
 version: 1.0.0+1
 
+scripts:
+  done: "rps build && rps release"
+  build: "flutter build apk --split-per-abi"
+  release: "gh release create v1.0.0 build/app/outputs/flutter-apk/app-arm64-v8a-release.apk build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk"
+
 environment:
   sdk: '>=2.19.0-444.6.beta <3.0.0'
 

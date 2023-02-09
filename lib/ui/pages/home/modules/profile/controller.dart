@@ -12,5 +12,7 @@ class HomeProfileController extends GetxController {
   void toManageTransactionCategory() =>
       Get.toNamed(Routes.manageTransactionCategory);
 
+  void toManageWallet() => Get.toNamed(Routes.manageWallet);
+
   void switchBrightness() => themeService.switchTheme();
 }
