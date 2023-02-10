@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:work_it/ui/pages/home/controller.dart';
 import 'package:work_it/ui/pages/home/modules/dashboard/view.dart';
 import 'package:work_it/ui/pages/home/modules/profile/view.dart';
+import 'package:work_it/ui/pages/home/modules/task/view.dart';
 import 'package:work_it/ui/pages/home/modules/transaction/view.dart';
 
 class _NavItem {
@@ -27,6 +28,11 @@ class HomeView extends GetView<HomeController> {
         title: 'Dashboard',
         icon: Icons.dashboard_rounded,
         view: HomeDashboardView(),
+      ),
+      _NavItem(
+        title: 'Task',
+        icon: Icons.task_rounded,
+        view: HomeTaskView(),
       ),
       _NavItem(
         title: 'Transaction',
