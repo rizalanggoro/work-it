@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:work_it/ui/pages/create_task/binding.dart';
+import 'package:work_it/ui/pages/create_task/view.dart';
 import 'package:work_it/ui/pages/create_transaction/binding.dart';
 import 'package:work_it/ui/pages/create_transaction/view.dart';
 import 'package:work_it/ui/pages/create_transaction_category/binding.dart';
@@ -28,6 +30,7 @@ abstract class Routes {
   static const createTransaction = '/create-transaction';
   static const createTransactionCategory = '/create-transaction-category';
   static const createWallet = '/create-wallet';
+  static const createTask = '/create-task';
 
   static const manageTransactionCategory = '/manage-transaction-category';
   static const manageTaskCategory = '/manage-task-category';
@@ -65,6 +68,11 @@ abstract class Routes {
       name: createWallet,
       page: () => const CreateWalletView(),
       binding: CreateWalletBinding(),
+    ),
+    GetPage(
+      name: createTask,
+      page: () => const CreateTaskView(),
+      binding: CreateTaskBinding(),
     ),
 
     // todo: manage

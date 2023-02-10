@@ -15,7 +15,7 @@ class HomeTaskView extends GetView<HomeTaskController> {
         title: const Text('Task'),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => controller.toCreateTask(),
         child: const Icon(Icons.add_rounded),
       ),
     );
