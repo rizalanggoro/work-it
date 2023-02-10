@@ -29,6 +29,10 @@ class HomeProfileSectionTask extends GetView<HomeProfileController> {
           ),
         ),
         ListTile(
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
           onTap: () => controller.toManageTaskCategory(),
           leading: const CircleAvatar(
             child: Icon(Icons.category_rounded),
