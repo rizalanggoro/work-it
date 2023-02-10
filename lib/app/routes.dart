@@ -10,6 +10,7 @@ import 'package:work_it/ui/pages/detail_transaction/view.dart';
 import 'package:work_it/ui/pages/home/binding.dart';
 import 'package:work_it/ui/pages/home/modules/dashboard/binding.dart';
 import 'package:work_it/ui/pages/home/modules/profile/binding.dart';
+import 'package:work_it/ui/pages/home/modules/task/binding.dart';
 import 'package:work_it/ui/pages/home/modules/transaction/binding.dart';
 import 'package:work_it/ui/pages/home/view.dart';
 import 'package:work_it/ui/pages/manage_transaction_category/binding.dart';
@@ -40,6 +41,7 @@ abstract class Routes {
       bindings: [
         HomeBinding(),
         HomeDashboardBinding(),
+        HomeTaskBinding(),
         HomeTransactionBinding(),
         HomeProfileBinding(),
       ],
