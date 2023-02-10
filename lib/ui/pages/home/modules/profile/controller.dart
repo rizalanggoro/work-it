@@ -22,7 +22,7 @@ class HomeProfileController extends GetxController {
 
   void _getAppVersion() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    version.value = '${packageInfo.version}+${packageInfo.buildNumber}';
+    version.value = packageInfo.version;
   }
 
   void toManageTaskCategory() => Get.toNamed(Routes.manageTaskCategory);
@@ -35,6 +35,13 @@ class HomeProfileController extends GetxController {
   void toCheckRelease() async {
     await launchUrlString(
       'https://github.com/rizalanggoro/work-it/releases',
+      mode: LaunchMode.externalApplication,
+    );
+  }
+
+  void toSourceCode() async {
+    await launchUrlString(
+      'https://github.com/rizalanggoro/work-it',
       mode: LaunchMode.externalApplication,
     );
   }

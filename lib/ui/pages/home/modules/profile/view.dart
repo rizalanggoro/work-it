@@ -36,6 +36,10 @@ class HomeProfileView extends GetView<HomeProfileController> {
               ),
             ),
             ListTile(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
               onTap: () => controller.switchBrightness(),
               leading: const CircleAvatar(
                 child: Icon(Icons.dark_mode_rounded),
@@ -61,6 +65,10 @@ class HomeProfileView extends GetView<HomeProfileController> {
               ),
             ),
             ListTile(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
               onTap: () => controller.toCheckRelease(),
               leading: const CircleAvatar(
                 child: Icon(Icons.update_rounded),
@@ -80,8 +88,35 @@ class HomeProfileView extends GetView<HomeProfileController> {
               trailing: const Icon(Icons.chevron_right_rounded),
             ),
             ListTile(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
+              onTap: () => controller.toSourceCode(),
               leading: const CircleAvatar(
                 child: Icon(Icons.code_rounded),
+              ),
+              title: Text(
+                'Source code',
+                style: TextStyle(
+                  color: colorScheme.onBackground,
+                ),
+              ),
+              subtitle: Text(
+                'View WorkIt app source code on Github',
+                style: TextStyle(
+                  color: colorScheme.onBackground.withOpacity(.64),
+                ),
+              ),
+              trailing: const Icon(Icons.chevron_right_rounded),
+            ),
+            ListTile(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
+              leading: const CircleAvatar(
+                child: Icon(Icons.numbers_rounded),
               ),
               title: Text(
                 'Version',
@@ -120,6 +155,10 @@ class HomeProfileView extends GetView<HomeProfileController> {
               ),
             ),
             ListTile(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
               onTap: () => controller.toManageTransactionCategory(),
               leading: const CircleAvatar(
                 child: Icon(
@@ -143,6 +182,10 @@ class HomeProfileView extends GetView<HomeProfileController> {
               ),
             ),
             ListTile(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
               onTap: () => controller.toManageWallet(),
               leading: const CircleAvatar(
                 child: Icon(
