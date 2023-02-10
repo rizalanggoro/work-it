@@ -4,6 +4,7 @@ import 'package:work_it/app/services/theme.dart';
 import 'package:work_it/app/services/transaction.dart';
 import 'package:work_it/app/services/wallet.dart';
 import 'package:work_it/data/providers/isar.dart';
+import 'package:work_it/data/repositories/task.dart';
 import 'package:work_it/data/repositories/task_category.dart';
 import 'package:work_it/data/repositories/transaction.dart';
 import 'package:work_it/data/repositories/transaction_category.dart';
@@ -30,6 +31,9 @@ class InitialBinding extends Bindings {
     Get.put(TaskCategoryRepository(
       isarProvider: Get.find(),
     ));
+    Get.put(TaskRepository(
+      isarProvider: Get.find(),
+    ));
 
     // todo: services
     // todo: -> theme
@@ -54,6 +58,7 @@ class InitialBinding extends Bindings {
     Get.put(
       TaskService(
         taskCategoryRepository: Get.find(),
+        taskRepository: Get.find(),
       ),
       permanent: true,
     );
