@@ -14,6 +14,10 @@ class HomeTaskView extends GetView<HomeTaskController> {
       appBar: AppBar(
         title: const Text('Task'),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add_rounded),
+      ),
     );
   }
 }

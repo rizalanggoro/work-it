@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_it/ui/pages/home/modules/profile/controller.dart';
+import 'package:work_it/ui/pages/home/modules/profile/widgets/sections/task.dart';
 
 class HomeProfileView extends GetView<HomeProfileController> {
   const HomeProfileView({super.key});
@@ -98,6 +99,9 @@ class HomeProfileView extends GetView<HomeProfileController> {
                 controller.version,
               ),
             ),
+
+            // todo: task
+            const HomeProfileSectionTask(),
 
             // todo: transaction
             Padding(

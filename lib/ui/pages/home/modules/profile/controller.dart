@@ -25,6 +25,8 @@ class HomeProfileController extends GetxController {
     version.value = '${packageInfo.version}+${packageInfo.buildNumber}';
   }
 
+  void toManageTaskCategory() => Get.toNamed(Routes.manageTaskCategory);
+
   void toManageTransactionCategory() =>
       Get.toNamed(Routes.manageTransactionCategory);
 
