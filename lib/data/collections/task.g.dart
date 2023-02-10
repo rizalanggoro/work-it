@@ -28,8 +28,13 @@ const TaskCollectionSchema = CollectionSchema(
       name: r'details',
       type: IsarType.string,
     ),
-    r'title': PropertySchema(
+    r'isDone': PropertySchema(
       id: 2,
+      name: r'isDone',
+      type: IsarType.bool,
+    ),
+    r'title': PropertySchema(
+      id: 3,
       name: r'title',
       type: IsarType.string,
     )
@@ -87,7 +92,8 @@ void _taskCollectionSerialize(
     object.detail,
   );
   writer.writeString(offsets[1], object.details);
-  writer.writeString(offsets[2], object.title);
+  writer.writeBool(offsets[2], object.isDone);
+  writer.writeString(offsets[3], object.title);
 }
 
 TaskCollection _taskCollectionDeserialize(
@@ -104,9 +110,10 @@ TaskCollection _taskCollectionDeserialize(
         ) ??
         DetailCollection(),
     details: reader.readStringOrNull(offsets[1]),
-    title: reader.readString(offsets[2]),
+    title: reader.readString(offsets[3]),
   );
   object.id = id;
+  object.isDone = reader.readBoolOrNull(offsets[2]);
   return object;
 }
 
@@ -127,6 +134,8 @@ P _taskCollectionDeserializeProp<P>(
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 3:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -441,6 +450,34 @@ extension TaskCollectionQueryFilter
   }
 
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      isDoneIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isDone',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      isDoneIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isDone',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      isDoneEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isDone',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
       titleEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -619,6 +656,19 @@ extension TaskCollectionQuerySortBy
     });
   }
 
+  QueryBuilder<TaskCollection, TaskCollection, QAfterSortBy> sortByIsDone() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDone', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterSortBy>
+      sortByIsDoneDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDone', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskCollection, TaskCollection, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -659,6 +709,19 @@ extension TaskCollectionQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskCollection, TaskCollection, QAfterSortBy> thenByIsDone() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDone', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterSortBy>
+      thenByIsDoneDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isDone', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskCollection, TaskCollection, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -678,6 +741,12 @@ extension TaskCollectionQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'details', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QDistinct> distinctByIsDone() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isDone');
     });
   }
 
@@ -707,6 +776,12 @@ extension TaskCollectionQueryProperty
   QueryBuilder<TaskCollection, String?, QQueryOperations> detailsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'details');
+    });
+  }
+
+  QueryBuilder<TaskCollection, bool?, QQueryOperations> isDoneProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isDone');
     });
   }
 

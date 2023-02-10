@@ -10,6 +10,7 @@ class TaskCollection {
 
   String title;
   String? details;
+  bool? isDone;
 
   final category = IsarLink<TaskCategoryCollection>();
 
