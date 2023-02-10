@@ -32,7 +32,7 @@ class GroupedTransactionWidget extends GetView<HomeTransactionController> {
             padding: EdgeInsets.only(
               left: 16,
               right: 16,
-              top: index > 0 ? 24 : 0,
+              top: index > 0 ? 24 : 16,
               bottom: 8,
             ),
             child: Row(

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:work_it/app/routes.dart';
 import 'package:work_it/app/services/transaction.dart';
 import 'package:work_it/app/services/wallet.dart';
 import 'package:work_it/data/collections/transaction.dart';
@@ -25,6 +26,17 @@ class CreateTransactionController extends GetxController {
   final Rx<DateTime> transactionDate = Rx(DateTime.now());
   final Rx<WalletCollection?> wallet = Rx(null);
 
+  void toSelectTransactionCategory() async {
+    var result = await Get.toNamed(
+      Routes.selectTransactionCategory,
+      arguments: transactionCategory.value,
+    );
+    if (result != null) {
+      transactionCategory.value = result as TransactionCategoryCollection;
+    }
+  }
+
+  @Deprecated('Use select transaction category page')
   void changeTransactionCategory({
     required TransactionCategoryCollection collection,
   }) {
