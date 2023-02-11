@@ -28,13 +28,18 @@ const TaskCollectionSchema = CollectionSchema(
       name: r'details',
       type: IsarType.string,
     ),
-    r'isDone': PropertySchema(
+    r'dueDate': PropertySchema(
       id: 2,
+      name: r'dueDate',
+      type: IsarType.long,
+    ),
+    r'isDone': PropertySchema(
+      id: 3,
       name: r'isDone',
       type: IsarType.bool,
     ),
     r'title': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'title',
       type: IsarType.string,
     )
@@ -92,8 +97,9 @@ void _taskCollectionSerialize(
     object.detail,
   );
   writer.writeString(offsets[1], object.details);
-  writer.writeBool(offsets[2], object.isDone);
-  writer.writeString(offsets[3], object.title);
+  writer.writeLong(offsets[2], object.dueDate);
+  writer.writeBool(offsets[3], object.isDone);
+  writer.writeString(offsets[4], object.title);
 }
 
 TaskCollection _taskCollectionDeserialize(
@@ -110,10 +116,11 @@ TaskCollection _taskCollectionDeserialize(
         ) ??
         DetailCollection(),
     details: reader.readStringOrNull(offsets[1]),
-    title: reader.readString(offsets[3]),
+    dueDate: reader.readLong(offsets[2]),
+    isDone: reader.readBool(offsets[3]),
+    title: reader.readString(offsets[4]),
   );
   object.id = id;
-  object.isDone = reader.readBoolOrNull(offsets[2]);
   return object;
 }
 
@@ -134,8 +141,10 @@ P _taskCollectionDeserializeProp<P>(
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
-      return (reader.readBoolOrNull(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 3:
+      return (reader.readBool(offset)) as P;
+    case 4:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -394,6 +403,62 @@ extension TaskCollectionQueryFilter
     });
   }
 
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      dueDateEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'dueDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      dueDateGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'dueDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      dueDateLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'dueDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      dueDateBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'dueDate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition> idEqualTo(
       Id value) {
     return QueryBuilder.apply(this, (query) {
@@ -450,25 +515,7 @@ extension TaskCollectionQueryFilter
   }
 
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
-      isDoneIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'isDone',
-      ));
-    });
-  }
-
-  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
-      isDoneIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'isDone',
-      ));
-    });
-  }
-
-  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
-      isDoneEqualTo(bool? value) {
+      isDoneEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isDone',
@@ -656,6 +703,19 @@ extension TaskCollectionQuerySortBy
     });
   }
 
+  QueryBuilder<TaskCollection, TaskCollection, QAfterSortBy> sortByDueDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dueDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterSortBy>
+      sortByDueDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dueDate', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskCollection, TaskCollection, QAfterSortBy> sortByIsDone() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDone', Sort.asc);
@@ -694,6 +754,19 @@ extension TaskCollectionQuerySortThenBy
       thenByDetailsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'details', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterSortBy> thenByDueDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dueDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterSortBy>
+      thenByDueDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dueDate', Sort.desc);
     });
   }
 
@@ -744,6 +817,12 @@ extension TaskCollectionQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TaskCollection, TaskCollection, QDistinct> distinctByDueDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'dueDate');
+    });
+  }
+
   QueryBuilder<TaskCollection, TaskCollection, QDistinct> distinctByIsDone() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isDone');
@@ -779,7 +858,13 @@ extension TaskCollectionQueryProperty
     });
   }
 
-  QueryBuilder<TaskCollection, bool?, QQueryOperations> isDoneProperty() {
+  QueryBuilder<TaskCollection, int, QQueryOperations> dueDateProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'dueDate');
+    });
+  }
+
+  QueryBuilder<TaskCollection, bool, QQueryOperations> isDoneProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isDone');
     });

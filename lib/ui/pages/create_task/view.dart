@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:work_it/ui/pages/create_task/controller.dart';
 import 'package:work_it/ui/pages/create_task/views/bottom_sheet_select_category.dart';
+import 'package:work_it/ui/values/constant.dart';
 
 class CreateTaskView extends GetView<CreateTaskController> {
   const CreateTaskView({super.key});
@@ -60,6 +62,7 @@ class CreateTaskView extends GetView<CreateTaskController> {
 
             // todo: category
             ListTile(
+              contentPadding: ConstantValues.listTileContentPadding,
               onTap: () => _showBottomSheetSelectCategory(context),
               leading: const CircleAvatar(
                 child: Icon(Icons.category_rounded),
@@ -78,6 +81,35 @@ class CreateTaskView extends GetView<CreateTaskController> {
                   ),
                 ),
                 controller.selectedTaskCategory,
+              ),
+              trailing: const Icon(Icons.chevron_right_rounded),
+            ),
+
+            // todo: due date
+            ListTile(
+              contentPadding: ConstantValues.listTileContentPadding,
+              onTap: () => controller.showDueDatePicker(context),
+              leading: const CircleAvatar(
+                child: Icon(Icons.today_rounded),
+              ),
+              title: Text(
+                'Due date',
+                style: TextStyle(
+                  color: colorScheme.onBackground,
+                ),
+              ),
+              subtitle: ObxValue(
+                (selectedDueDate) => Text(
+                  selectedDueDate.value != null
+                      ? DateFormat('EEEE, d MMM yyyy').format(
+                          selectedDueDate.value!,
+                        )
+                      : 'No due date',
+                  style: TextStyle(
+                    color: colorScheme.onBackground.withOpacity(.64),
+                  ),
+                ),
+                controller.selectedDueDate,
               ),
               trailing: const Icon(Icons.chevron_right_rounded),
             ),

@@ -12,6 +12,7 @@ class IsarProvider extends GetxService {
     super.onReady();
 
     openIsarInstance();
+    // _deleteDatabase();
   }
 
   Future<Isar> openIsarInstance() async {
@@ -23,5 +24,10 @@ class IsarProvider extends GetxService {
           TaskCategoryCollectionSchema,
           TaskCollectionSchema,
         ]);
+  }
+
+  void _deleteDatabase() async {
+    var isar = await openIsarInstance();
+    await isar.writeTxn(() async => await isar.taskCollections.clear());
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_it/app/routes.dart';
@@ -6,8 +8,6 @@ import 'package:work_it/data/collections/detail.dart';
 import 'package:work_it/data/collections/task.dart';
 import 'package:work_it/data/collections/task_category.dart';
 import 'package:work_it/data/repositories/task.dart';
-
-import 'dart:developer' as dev;
 
 class CreateTaskController extends GetxController {
   final _devName = 'CreateTaskController';
@@ -24,6 +24,7 @@ class CreateTaskController extends GetxController {
       controllerDetails = TextEditingController();
 
   final Rx<TaskCategoryCollection?> selectedTaskCategory = Rx(null);
+  final Rx<DateTime?> selectedDueDate = Rx(null);
 
   void toManageTaskCategory() => Get.toNamed(Routes.manageTaskCategory);
 
@@ -44,6 +45,8 @@ class CreateTaskController extends GetxController {
       var collection = TaskCollection(
         title: title,
         details: details,
+        isDone: false,
+        dueDate: selectedDueDate.value?.millisecondsSinceEpoch,
         detail: DetailCollection(
           createAtEpoch: createdAt,
           updatedAtEpoch: createdAt,
@@ -64,6 +67,23 @@ class CreateTaskController extends GetxController {
           name: _devName,
         );
       }
+    }
+  }
+
+  void showDueDatePicker(BuildContext context) async {
+    final initialDate = selectedDueDate.value ?? DateTime.now();
+    final firstDate = DateTime(initialDate.year - 1);
+    final lastDate = DateTime(initialDate.year + 1);
+
+    final result = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: firstDate,
+      lastDate: lastDate,
+    );
+
+    if (result != null) {
+      selectedDueDate.value = result;
     }
   }
 }

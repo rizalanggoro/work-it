@@ -10,7 +10,8 @@ class TaskCollection {
 
   String title;
   String? details;
-  bool? isDone;
+  bool isDone;
+  int? dueDate;
 
   final category = IsarLink<TaskCategoryCollection>();
 
@@ -20,5 +21,7 @@ class TaskCollection {
     required this.title,
     this.details,
     required this.detail,
+    required this.isDone,
+    this.dueDate,
   });
 }
