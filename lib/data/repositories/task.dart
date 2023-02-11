@@ -1,5 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:work_it/data/collections/task.dart';
+import 'package:work_it/data/collections/task_category.dart';
 import 'package:work_it/data/providers/isar.dart';
 import 'package:work_it/data/results/task.dart';
 
@@ -37,8 +38,38 @@ class TaskRepository {
     return await isar.taskCollections.where().findAll();
   }
 
+  Future<List<TaskCollection>> readAllNoCategory() async {
+    final isar = await isarProvider.openIsarInstance();
+    return await isar.taskCollections.filter().categoryIsNull().findAll();
+  }
+
+  Future<List<TaskCollection>> readAllByCategory({
+    required TaskCategoryCollection collection,
+  }) async {
+    final isar = await isarProvider.openIsarInstance();
+    return await isar.taskCollections
+        .filter()
+        .category((q) => q.idEqualTo(collection.id))
+        .findAll();
+  }
+
   Stream<List<TaskCollection>> stream() async* {
     final isar = await isarProvider.openIsarInstance();
     yield* isar.taskCollections.where().watch();
+  }
+
+  Stream<List<TaskCollection>> streamNoCategory() async* {
+    final isar = await isarProvider.openIsarInstance();
+    yield* isar.taskCollections.filter().categoryIsNull().watch();
+  }
+
+  Stream<List<TaskCollection>> streamByCategory({
+    required TaskCategoryCollection collection,
+  }) async* {
+    final isar = await isarProvider.openIsarInstance();
+    yield* isar.taskCollections
+        .filter()
+        .category((q) => q.idEqualTo(collection.id))
+        .watch();
   }
 }

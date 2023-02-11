@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:work_it/data/enums/task_filter_type.dart';
 import 'package:work_it/ui/pages/home/modules/task/controller.dart';
 
 class HomeTaskView extends GetView<HomeTaskController> {
@@ -19,14 +20,30 @@ class HomeTaskView extends GetView<HomeTaskController> {
             const Text('Task'),
             const SizedBox(height: 6),
             ObxValue(
-              (selectedTaskCategory) => Text(
-                selectedTaskCategory.value?.name ?? 'All categories',
-                style: TextStyle(
-                  color: colorScheme.onBackground.withOpacity(.64),
-                  fontSize: textTheme.bodyMedium!.fontSize,
-                ),
-              ),
-              controller.selectedTaskCategory,
+              (taskFilter) {
+                String data;
+                switch (taskFilter.value.type) {
+                  case TaskFilterType.allCategories:
+                    data = 'All categories';
+                    break;
+                  case TaskFilterType.noCategory:
+                    data = 'No category';
+                    break;
+                  case TaskFilterType.specificCategory:
+                    data = taskFilter.value.categoryCollection?.name ??
+                        'Category not found!';
+                    break;
+                }
+
+                return Text(
+                  data,
+                  style: TextStyle(
+                    color: colorScheme.onBackground.withOpacity(.64),
+                    fontSize: textTheme.bodyMedium!.fontSize,
+                  ),
+                );
+              },
+              controller.taskFilter,
             ),
           ],
         ),
