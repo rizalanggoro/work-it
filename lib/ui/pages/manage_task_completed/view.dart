@@ -47,7 +47,9 @@ class ManageTaskCompletedView extends GetView<ManageTaskCompletedController> {
                     ),
                     trailing: IconButton(
                       icon: const Icon(Icons.remove_done_rounded),
-                      onPressed: () {},
+                      onPressed: () => controller.undone(
+                        collection: collection,
+                      ),
                     ),
                   );
                 },

@@ -65,6 +65,34 @@ class TaskRepository {
     );
   }
 
+  Future<TaskResult> undone({
+    required int id,
+  }) async {
+    String? message = 'Something went wrong! Please try again later';
+
+    try {
+      final isar = await isarProvider.openIsarInstance();
+
+      var doneCollection =
+          await isar.taskCollections.where().idEqualTo(id).findFirst();
+      if (doneCollection != null) {
+        doneCollection.isDone = false;
+        await isar.writeTxn(() async {
+          await isar.taskCollections.put(doneCollection);
+        });
+
+        return TaskResult(success: true);
+      }
+    } catch (error) {
+      dev.log(error.toString(), name: _devName);
+    }
+
+    return TaskResult(
+      success: false,
+      message: message,
+    );
+  }
+
   Future<List<TaskCollection>> readAll() async {
     final isar = await isarProvider.openIsarInstance();
     return await isar.taskCollections.filter().isDoneEqualTo(false).findAll();
