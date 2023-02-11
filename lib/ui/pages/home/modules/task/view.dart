@@ -12,7 +12,31 @@ class HomeTaskView extends GetView<HomeTaskController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Task'),
+        toolbarHeight: 80,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Task'),
+            const SizedBox(height: 6),
+            ObxValue(
+              (selectedTaskCategory) => Text(
+                selectedTaskCategory.value?.name ?? 'All categories',
+                style: TextStyle(
+                  color: colorScheme.onBackground.withOpacity(.64),
+                  fontSize: textTheme.bodyMedium!.fontSize,
+                ),
+              ),
+              controller.selectedTaskCategory,
+            ),
+          ],
+        ),
+        actions: [
+          IconButton(
+            onPressed: () => controller.showBottomSheetSelectCategory(context),
+            icon: const Icon(Icons.category_rounded),
+          ),
+          const SizedBox(width: 16),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => controller.toCreateTask(),

@@ -49,6 +49,7 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       bottomNavigationBar: ObxValue(
         (navigationIndex) => NavigationBar(
+          labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           selectedIndex: navigationIndex.value,
           destinations: [
             for (var item in navItems)
