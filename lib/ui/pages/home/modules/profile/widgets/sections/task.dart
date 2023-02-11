@@ -46,7 +46,7 @@ class HomeProfileSectionTask extends GetView<HomeProfileController> {
           subtitle: Text(
             'Create, update, delete task category',
             style: TextStyle(
-              color: colorScheme.onBackground,
+              color: colorScheme.onBackground.withOpacity(.64),
             ),
           ),
           trailing: const Icon(Icons.chevron_right_rounded),

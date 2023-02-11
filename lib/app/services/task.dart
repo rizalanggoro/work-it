@@ -23,9 +23,27 @@ class TaskService extends GetxService {
   final RxList<TaskCategoryCollection> taskCategories = RxList([]);
 
   StreamSubscription<List<TaskCollection>>? streamSubscriptionTasks;
+  StreamSubscription<List<TaskCollection>>? streamSubscriptionFutureTasks;
+  StreamSubscription<List<TaskCollection>>? streamSubscriptionPastTasks;
+  StreamSubscription<List<TaskCollection>>? streamSubscriptionNoDueTasks;
+
   StreamSubscription<List<TaskCollection>>? streamSubscriptionTasksCompleted;
+
+  // StreamSubscription<List<TaskCollection>>?
+  //     streamSubscriptionTasksFutureCompleted;
+  // StreamSubscription<List<TaskCollection>>?
+  //     streamSubscriptionTasksPastCompleted;
+
   final RxList<TaskCollection> tasks = RxList([]);
+  final RxList<TaskCollection> futureTasks = RxList([]);
+  final RxList<TaskCollection> pastTasks = RxList([]);
+  final RxList<TaskCollection> noDueTasks = RxList([]);
+
   final RxList<TaskCollection> tasksCompleted = RxList([]);
+
+  // final RxList<TaskCollection> futureTasksCompleted = RxList([]);
+  // final RxList<TaskCollection> pastTasksCompleted = RxList([]);
+  // final RxList<TaskCollection> noDueTasksCompleted = RxList([]);
 
   @override
   void onReady() {
@@ -48,13 +66,13 @@ class TaskService extends GetxService {
   }
 
   void filterTasks() async {
-    if (streamSubscriptionTasks != null) {
-      await streamSubscriptionTasks!.cancel();
-    }
+    await streamSubscriptionTasks?.cancel();
+    await streamSubscriptionFutureTasks?.cancel();
+    await streamSubscriptionPastTasks?.cancel();
 
-    if (streamSubscriptionTasksCompleted != null) {
-      await streamSubscriptionTasksCompleted!.cancel();
-    }
+    await streamSubscriptionTasksCompleted?.cancel();
+    // await streamSubscriptionTasksFutureCompleted?.cancel();
+    // await streamSubscriptionTasksPastCompleted?.cancel();
 
     final filter = taskFilter.value;
     final filterType = filter.type;
@@ -62,10 +80,27 @@ class TaskService extends GetxService {
     switch (filterType) {
       case TaskFilterType.allCategories:
         tasks.value = await taskRepository.readAll();
+        futureTasks.value = await taskRepository.readAllFuture();
+        pastTasks.value = await taskRepository.readAllPast();
+        noDueTasks.value = await taskRepository.readAllNoDue();
+
+        // todo: reads -> completed
         tasksCompleted.value = await taskRepository.readAllCompleted();
 
-        streamSubscriptionTasks =
-            taskRepository.stream().listen((event) => tasks.value = event);
+        streamSubscriptionTasks = taskRepository.stream().listen(
+              (event) => tasks.value = event,
+            );
+        streamSubscriptionFutureTasks = taskRepository.streamFuture().listen(
+              (event) => futureTasks.value = event,
+            );
+        streamSubscriptionPastTasks = taskRepository.streamPast().listen(
+              (event) => pastTasks.value = event,
+            );
+        streamSubscriptionNoDueTasks = taskRepository.streamNoDue().listen(
+              (event) => noDueTasks.value = event,
+            );
+
+        // todo: streams -> completed
         streamSubscriptionTasksCompleted = taskRepository
             .streamCompleted()
             .listen((event) => tasksCompleted.value = event);
@@ -73,12 +108,31 @@ class TaskService extends GetxService {
 
       case TaskFilterType.noCategory:
         tasks.value = await taskRepository.readAllNoCategory();
+        futureTasks.value = await taskRepository.readAllFutureNoCategory();
+        pastTasks.value = await taskRepository.readAllPastNoCategory();
+        noDueTasks.value = await taskRepository.readAllNoDueNoCategory();
+
+        // todo: read completed
         tasksCompleted.value =
             await taskRepository.readAllNoCategoryCompleted();
 
-        streamSubscriptionTasks = taskRepository
-            .streamNoCategory()
-            .listen((event) => tasks.value = event);
+        streamSubscriptionTasks = taskRepository.streamNoCategory().listen(
+              (event) => tasks.value = event,
+            );
+        streamSubscriptionFutureTasks =
+            taskRepository.streamFutureNoCategory().listen(
+                  (event) => futureTasks.value = event,
+                );
+        streamSubscriptionPastTasks =
+            taskRepository.streamPastNoCategory().listen(
+                  (event) => pastTasks.value = event,
+                );
+        streamSubscriptionNoDueTasks =
+            taskRepository.streamNoDueNoCategory().listen(
+                  (event) => noDueTasks.value = event,
+                );
+
+        // todo: stream completed
         streamSubscriptionTasksCompleted = taskRepository
             .streamNoCategoryCompleted()
             .listen((event) => tasksCompleted.value = event);
@@ -88,6 +142,17 @@ class TaskService extends GetxService {
         tasks.value = await taskRepository.readAllByCategory(
           collection: filter.categoryCollection!,
         );
+        futureTasks.value = await taskRepository.readAllByCategoryFuture(
+          collection: filter.categoryCollection!,
+        );
+        pastTasks.value = await taskRepository.readAllByCategoryPast(
+          collection: filter.categoryCollection!,
+        );
+        noDueTasks.value = await taskRepository.readAllByCategoryNoDue(
+          collection: filter.categoryCollection!,
+        );
+
+        // todo: read completed
         tasksCompleted.value = await taskRepository.readAllByCategoryCompleted(
           collection: filter.categoryCollection!,
         );
@@ -97,6 +162,23 @@ class TaskService extends GetxService {
               collection: filter.categoryCollection!,
             )
             .listen((event) => tasks.value = event);
+        streamSubscriptionFutureTasks = taskRepository
+            .streamByCategoryFuture(
+              collection: filter.categoryCollection!,
+            )
+            .listen((event) => futureTasks.value = event);
+        streamSubscriptionPastTasks = taskRepository
+            .streamByCategoryPast(
+              collection: filter.categoryCollection!,
+            )
+            .listen((event) => pastTasks.value = event);
+        streamSubscriptionNoDueTasks = taskRepository
+            .streamByCategoryNoDue(
+              collection: filter.categoryCollection!,
+            )
+            .listen((event) => noDueTasks.value = event);
+
+        // todo: stream completed
         streamSubscriptionTasksCompleted = taskRepository
             .streamByCategoryCompleted(
               collection: filter.categoryCollection!,

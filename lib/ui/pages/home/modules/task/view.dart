@@ -3,6 +3,11 @@ import 'package:get/get.dart';
 import 'package:work_it/data/enums/task_filter_type.dart';
 import 'package:work_it/ui/pages/home/modules/task/controller.dart';
 import 'package:work_it/ui/pages/home/modules/task/widgets/card_done_task.dart';
+import 'package:work_it/ui/pages/home/modules/task/widgets/sections/future_task.dart';
+import 'package:work_it/ui/pages/home/modules/task/widgets/sections/no_due_date_task.dart';
+import 'package:work_it/ui/pages/home/modules/task/widgets/sections/past_task.dart';
+import 'package:work_it/ui/pages/home/modules/task/widgets/sections/today_task.dart';
+import 'package:work_it/ui/widgets/conditional_widget.dart';
 
 class HomeTaskView extends GetView<HomeTaskController> {
   const HomeTaskView({super.key});
@@ -65,42 +70,29 @@ class HomeTaskView extends GetView<HomeTaskController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const HomeTaskCardDoneTaskWidget(),
+            const HomeTaskNoDueDateTaskSection(),
             ObxValue(
-              (tasks) => ListView.builder(
-                itemBuilder: (context, index) {
-                  final collection = tasks[index];
-
-                  collection.category.loadSync();
-                  final categoryCollection = collection.category.value;
-
-                  return ListTile(
-                    onTap: () {},
-                    title: Text(
-                      collection.title ?? 'No title',
-                      style: TextStyle(
-                        color: colorScheme.onBackground,
-                      ),
-                    ),
-                    subtitle: Text(
-                      categoryCollection?.name ?? 'No category',
-                      style: TextStyle(
-                        color: colorScheme.onBackground.withOpacity(.64),
-                      ),
-                    ),
-                    trailing: IconButton(
-                      onPressed: () => controller.doneTask(
-                        collection: collection,
-                      ),
-                      icon: const Icon(Icons.check_rounded),
-                    ),
-                  );
-                },
-                itemCount: tasks.length,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+              (tasks) => ConditionalWidget(
+                body: const HomeTaskTodayTaskSection(),
+                showIf: tasks.isNotEmpty,
               ),
               controller.taskService.tasks,
             ),
+            ObxValue(
+              (futureTasks) => ConditionalWidget(
+                body: const HomeTaskFutureTaskSection(),
+                showIf: futureTasks.isNotEmpty,
+              ),
+              controller.taskService.futureTasks,
+            ),
+            ObxValue(
+              (pastTasks) => ConditionalWidget(
+                body: const HomeTaskPastTaskSection(),
+                showIf: pastTasks.isNotEmpty,
+              ),
+              controller.taskService.pastTasks,
+            ),
+            const SizedBox(height: 56 + 32),
           ],
         ),
       ),
