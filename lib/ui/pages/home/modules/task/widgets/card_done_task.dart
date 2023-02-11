@@ -31,11 +31,20 @@ class HomeTaskCardDoneTaskWidget extends GetView<HomeTaskController> {
             color: colorScheme.onBackground,
           ),
         ),
-        subtitle: Text(
-          'You have completed 10 out of 100 tasks!',
-          style: TextStyle(
-            color: colorScheme.onBackground.withOpacity(.64),
-          ),
+        subtitle: ObxValue(
+          (tasksCompleted) {
+            final completedCount = tasksCompleted.length;
+            final uncompletedCount = controller.taskService.tasks.length;
+            final totalCount = (completedCount + uncompletedCount);
+
+            return Text(
+              'You have completed $completedCount out of $totalCount ${totalCount > 1 ? 'tasks' : 'task'}!',
+              style: TextStyle(
+                color: colorScheme.onBackground.withOpacity(.64),
+              ),
+            );
+          },
+          controller.taskService.tasksCompleted,
         ),
         trailing: const Icon(Icons.chevron_right_rounded),
       ),
