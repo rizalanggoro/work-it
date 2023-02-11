@@ -26,6 +26,8 @@ class HomeTaskController extends GetxController {
 
   void toCreateTask() => Get.toNamed(Routes.createTask);
 
+  void toManageTaskCompleted() => Get.toNamed(Routes.manageTaskCompleted);
+
   void toManageTaskCategory() {
     Get.back();
     Get.toNamed(Routes.manageTaskCategory);

@@ -23,7 +23,9 @@ class TaskService extends GetxService {
   final RxList<TaskCategoryCollection> taskCategories = RxList([]);
 
   StreamSubscription<List<TaskCollection>>? streamSubscriptionTasks;
+  StreamSubscription<List<TaskCollection>>? streamSubscriptionTasksCompleted;
   final RxList<TaskCollection> tasks = RxList([]);
+  final RxList<TaskCollection> tasksCompleted = RxList([]);
 
   @override
   void onReady() {
@@ -50,32 +52,56 @@ class TaskService extends GetxService {
       await streamSubscriptionTasks!.cancel();
     }
 
+    if (streamSubscriptionTasksCompleted != null) {
+      await streamSubscriptionTasksCompleted!.cancel();
+    }
+
     final filter = taskFilter.value;
     final filterType = filter.type;
 
     switch (filterType) {
       case TaskFilterType.allCategories:
         tasks.value = await taskRepository.readAll();
+        tasksCompleted.value = await taskRepository.readAllCompleted();
+
         streamSubscriptionTasks =
             taskRepository.stream().listen((event) => tasks.value = event);
+        streamSubscriptionTasksCompleted = taskRepository
+            .streamCompleted()
+            .listen((event) => tasksCompleted.value = event);
         break;
 
       case TaskFilterType.noCategory:
         tasks.value = await taskRepository.readAllNoCategory();
+        tasksCompleted.value =
+            await taskRepository.readAllNoCategoryCompleted();
+
         streamSubscriptionTasks = taskRepository
             .streamNoCategory()
             .listen((event) => tasks.value = event);
+        streamSubscriptionTasksCompleted = taskRepository
+            .streamNoCategoryCompleted()
+            .listen((event) => tasksCompleted.value = event);
         break;
 
       case TaskFilterType.specificCategory:
         tasks.value = await taskRepository.readAllByCategory(
           collection: filter.categoryCollection!,
         );
+        tasksCompleted.value = await taskRepository.readAllByCategoryCompleted(
+          collection: filter.categoryCollection!,
+        );
+
         streamSubscriptionTasks = taskRepository
             .streamByCategory(
               collection: filter.categoryCollection!,
             )
             .listen((event) => tasks.value = event);
+        streamSubscriptionTasksCompleted = taskRepository
+            .streamByCategoryCompleted(
+              collection: filter.categoryCollection!,
+            )
+            .listen((event) => tasksCompleted.value = event);
         break;
     }
   }

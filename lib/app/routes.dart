@@ -17,6 +17,8 @@ import 'package:work_it/ui/pages/home/modules/transaction/binding.dart';
 import 'package:work_it/ui/pages/home/view.dart';
 import 'package:work_it/ui/pages/manage_task_category/binding.dart';
 import 'package:work_it/ui/pages/manage_task_category/view.dart';
+import 'package:work_it/ui/pages/manage_task_completed/binding.dart';
+import 'package:work_it/ui/pages/manage_task_completed/view.dart';
 import 'package:work_it/ui/pages/manage_transaction_category/binding.dart';
 import 'package:work_it/ui/pages/manage_transaction_category/view.dart';
 import 'package:work_it/ui/pages/manage_wallet/binding.dart';
@@ -35,6 +37,7 @@ abstract class Routes {
   static const manageTransactionCategory = '/manage-transaction-category';
   static const manageTaskCategory = '/manage-task-category';
   static const manageWallet = '/manage-wallet';
+  static const manageTaskCompleted = '/manage-task-completed';
 
   static const detailTransaction = '/detail-transaction';
 
@@ -90,6 +93,11 @@ abstract class Routes {
       name: manageWallet,
       page: () => const ManageWalletView(),
       binding: ManageWalletBinding(),
+    ),
+    GetPage(
+      name: manageTaskCompleted,
+      page: () => const ManageTaskCompletedView(),
+      binding: ManageTaskCompletedBinding(),
     ),
 
     // todo: detail

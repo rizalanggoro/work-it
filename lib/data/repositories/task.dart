@@ -70,11 +70,25 @@ class TaskRepository {
     return await isar.taskCollections.filter().isDoneEqualTo(false).findAll();
   }
 
+  Future<List<TaskCollection>> readAllCompleted() async {
+    final isar = await isarProvider.openIsarInstance();
+    return await isar.taskCollections.filter().isDoneEqualTo(true).findAll();
+  }
+
   Future<List<TaskCollection>> readAllNoCategory() async {
     final isar = await isarProvider.openIsarInstance();
     return await isar.taskCollections
         .filter()
         .isDoneEqualTo(false)
+        .categoryIsNull()
+        .findAll();
+  }
+
+  Future<List<TaskCollection>> readAllNoCategoryCompleted() async {
+    final isar = await isarProvider.openIsarInstance();
+    return await isar.taskCollections
+        .filter()
+        .isDoneEqualTo(true)
         .categoryIsNull()
         .findAll();
   }
@@ -90,9 +104,25 @@ class TaskRepository {
         .findAll();
   }
 
+  Future<List<TaskCollection>> readAllByCategoryCompleted({
+    required TaskCategoryCollection collection,
+  }) async {
+    final isar = await isarProvider.openIsarInstance();
+    return await isar.taskCollections
+        .filter()
+        .isDoneEqualTo(true)
+        .category((q) => q.idEqualTo(collection.id))
+        .findAll();
+  }
+
   Stream<List<TaskCollection>> stream() async* {
     final isar = await isarProvider.openIsarInstance();
     yield* isar.taskCollections.filter().isDoneEqualTo(false).watch();
+  }
+
+  Stream<List<TaskCollection>> streamCompleted() async* {
+    final isar = await isarProvider.openIsarInstance();
+    yield* isar.taskCollections.filter().isDoneEqualTo(true).watch();
   }
 
   Stream<List<TaskCollection>> streamNoCategory() async* {
@@ -104,6 +134,15 @@ class TaskRepository {
         .watch();
   }
 
+  Stream<List<TaskCollection>> streamNoCategoryCompleted() async* {
+    final isar = await isarProvider.openIsarInstance();
+    yield* isar.taskCollections
+        .filter()
+        .isDoneEqualTo(true)
+        .categoryIsNull()
+        .watch();
+  }
+
   Stream<List<TaskCollection>> streamByCategory({
     required TaskCategoryCollection collection,
   }) async* {
@@ -111,6 +150,17 @@ class TaskRepository {
     yield* isar.taskCollections
         .filter()
         .isDoneEqualTo(false)
+        .category((q) => q.idEqualTo(collection.id))
+        .watch();
+  }
+
+  Stream<List<TaskCollection>> streamByCategoryCompleted({
+    required TaskCategoryCollection collection,
+  }) async* {
+    final isar = await isarProvider.openIsarInstance();
+    yield* isar.taskCollections
+        .filter()
+        .isDoneEqualTo(true)
         .category((q) => q.idEqualTo(collection.id))
         .watch();
   }

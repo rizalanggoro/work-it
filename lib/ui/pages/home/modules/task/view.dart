@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_it/data/enums/task_filter_type.dart';
 import 'package:work_it/ui/pages/home/modules/task/controller.dart';
+import 'package:work_it/ui/pages/home/modules/task/widgets/card_done_task.dart';
 
 class HomeTaskView extends GetView<HomeTaskController> {
   const HomeTaskView({super.key});
@@ -63,6 +64,7 @@ class HomeTaskView extends GetView<HomeTaskController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const HomeTaskCardDoneTaskWidget(),
             ObxValue(
               (tasks) => ListView.builder(
                 itemBuilder: (context, index) {
