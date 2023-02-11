@@ -1,3 +1,5 @@
+import 'dart:developer' as dev;
+
 import 'package:isar/isar.dart';
 import 'package:work_it/data/collections/task.dart';
 import 'package:work_it/data/collections/task_category.dart';
@@ -5,6 +7,8 @@ import 'package:work_it/data/providers/isar.dart';
 import 'package:work_it/data/results/task.dart';
 
 class TaskRepository {
+  final _devName = 'TaskRepository';
+
   final IsarProvider isarProvider;
 
   TaskRepository({
@@ -33,14 +37,46 @@ class TaskRepository {
     );
   }
 
+  Future<TaskResult> done({
+    required int id,
+  }) async {
+    String? message = 'Something went wrong! Please try again later';
+
+    try {
+      final isar = await isarProvider.openIsarInstance();
+
+      var doneCollection =
+          await isar.taskCollections.where().idEqualTo(id).findFirst();
+      if (doneCollection != null) {
+        doneCollection.isDone = true;
+        await isar.writeTxn(() async {
+          await isar.taskCollections.put(doneCollection);
+        });
+
+        return TaskResult(success: true);
+      }
+    } catch (error) {
+      dev.log(error.toString(), name: _devName);
+    }
+
+    return TaskResult(
+      success: false,
+      message: message,
+    );
+  }
+
   Future<List<TaskCollection>> readAll() async {
     final isar = await isarProvider.openIsarInstance();
-    return await isar.taskCollections.where().findAll();
+    return await isar.taskCollections.filter().isDoneEqualTo(false).findAll();
   }
 
   Future<List<TaskCollection>> readAllNoCategory() async {
     final isar = await isarProvider.openIsarInstance();
-    return await isar.taskCollections.filter().categoryIsNull().findAll();
+    return await isar.taskCollections
+        .filter()
+        .isDoneEqualTo(false)
+        .categoryIsNull()
+        .findAll();
   }
 
   Future<List<TaskCollection>> readAllByCategory({
@@ -49,18 +85,23 @@ class TaskRepository {
     final isar = await isarProvider.openIsarInstance();
     return await isar.taskCollections
         .filter()
+        .isDoneEqualTo(false)
         .category((q) => q.idEqualTo(collection.id))
         .findAll();
   }
 
   Stream<List<TaskCollection>> stream() async* {
     final isar = await isarProvider.openIsarInstance();
-    yield* isar.taskCollections.where().watch();
+    yield* isar.taskCollections.filter().isDoneEqualTo(false).watch();
   }
 
   Stream<List<TaskCollection>> streamNoCategory() async* {
     final isar = await isarProvider.openIsarInstance();
-    yield* isar.taskCollections.filter().categoryIsNull().watch();
+    yield* isar.taskCollections
+        .filter()
+        .isDoneEqualTo(false)
+        .categoryIsNull()
+        .watch();
   }
 
   Stream<List<TaskCollection>> streamByCategory({
@@ -69,6 +110,7 @@ class TaskRepository {
     final isar = await isarProvider.openIsarInstance();
     yield* isar.taskCollections
         .filter()
+        .isDoneEqualTo(false)
         .category((q) => q.idEqualTo(collection.id))
         .watch();
   }

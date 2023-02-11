@@ -8,20 +8,20 @@ part 'task.g.dart';
 class TaskCollection {
   Id id = Isar.autoIncrement;
 
-  String title;
+  String? title;
   String? details;
-  bool isDone;
+  bool? isDone;
   int? dueDate;
 
   final category = IsarLink<TaskCategoryCollection>();
 
-  DetailCollection detail;
+  DetailCollection? detail;
 
   TaskCollection({
-    required this.title,
+    this.title,
     this.details,
-    required this.detail,
-    required this.isDone,
+    this.detail,
+    this.isDone,
     this.dueDate,
   });
 }

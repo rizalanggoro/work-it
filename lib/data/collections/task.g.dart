@@ -71,16 +71,26 @@ int _taskCollectionEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 +
-      DetailCollectionSchema.estimateSize(
-          object.detail, allOffsets[DetailCollection]!, allOffsets);
+  {
+    final value = object.detail;
+    if (value != null) {
+      bytesCount += 3 +
+          DetailCollectionSchema.estimateSize(
+              value, allOffsets[DetailCollection]!, allOffsets);
+    }
+  }
   {
     final value = object.details;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
   }
-  bytesCount += 3 + object.title.length * 3;
+  {
+    final value = object.title;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   return bytesCount;
 }
 
@@ -110,15 +120,14 @@ TaskCollection _taskCollectionDeserialize(
 ) {
   final object = TaskCollection(
     detail: reader.readObjectOrNull<DetailCollection>(
-          offsets[0],
-          DetailCollectionSchema.deserialize,
-          allOffsets,
-        ) ??
-        DetailCollection(),
+      offsets[0],
+      DetailCollectionSchema.deserialize,
+      allOffsets,
+    ),
     details: reader.readStringOrNull(offsets[1]),
-    dueDate: reader.readLong(offsets[2]),
-    isDone: reader.readBool(offsets[3]),
-    title: reader.readString(offsets[4]),
+    dueDate: reader.readLongOrNull(offsets[2]),
+    isDone: reader.readBoolOrNull(offsets[3]),
+    title: reader.readStringOrNull(offsets[4]),
   );
   object.id = id;
   return object;
@@ -133,19 +142,18 @@ P _taskCollectionDeserializeProp<P>(
   switch (propertyId) {
     case 0:
       return (reader.readObjectOrNull<DetailCollection>(
-            offset,
-            DetailCollectionSchema.deserialize,
-            allOffsets,
-          ) ??
-          DetailCollection()) as P;
+        offset,
+        DetailCollectionSchema.deserialize,
+        allOffsets,
+      )) as P;
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
-      return (reader.readLong(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 3:
-      return (reader.readBool(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -249,6 +257,24 @@ extension TaskCollectionQueryWhere
 
 extension TaskCollectionQueryFilter
     on QueryBuilder<TaskCollection, TaskCollection, QFilterCondition> {
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      detailIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'detail',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      detailIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'detail',
+      ));
+    });
+  }
+
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
       detailsIsNull() {
     return QueryBuilder.apply(this, (query) {
@@ -404,7 +430,25 @@ extension TaskCollectionQueryFilter
   }
 
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
-      dueDateEqualTo(int value) {
+      dueDateIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'dueDate',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      dueDateIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'dueDate',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      dueDateEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'dueDate',
@@ -415,7 +459,7 @@ extension TaskCollectionQueryFilter
 
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
       dueDateGreaterThan(
-    int value, {
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -429,7 +473,7 @@ extension TaskCollectionQueryFilter
 
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
       dueDateLessThan(
-    int value, {
+    int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -443,8 +487,8 @@ extension TaskCollectionQueryFilter
 
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
       dueDateBetween(
-    int lower,
-    int upper, {
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -515,7 +559,25 @@ extension TaskCollectionQueryFilter
   }
 
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
-      isDoneEqualTo(bool value) {
+      isDoneIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isDone',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      isDoneIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isDone',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      isDoneEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isDone',
@@ -525,8 +587,26 @@ extension TaskCollectionQueryFilter
   }
 
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      titleIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'title',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
+      titleIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'title',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
       titleEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -540,7 +620,7 @@ extension TaskCollectionQueryFilter
 
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
       titleGreaterThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -556,7 +636,7 @@ extension TaskCollectionQueryFilter
 
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
       titleLessThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -572,8 +652,8 @@ extension TaskCollectionQueryFilter
 
   QueryBuilder<TaskCollection, TaskCollection, QAfterFilterCondition>
       titleBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -845,7 +925,7 @@ extension TaskCollectionQueryProperty
     });
   }
 
-  QueryBuilder<TaskCollection, DetailCollection, QQueryOperations>
+  QueryBuilder<TaskCollection, DetailCollection?, QQueryOperations>
       detailProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'detail');
@@ -858,19 +938,19 @@ extension TaskCollectionQueryProperty
     });
   }
 
-  QueryBuilder<TaskCollection, int, QQueryOperations> dueDateProperty() {
+  QueryBuilder<TaskCollection, int?, QQueryOperations> dueDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'dueDate');
     });
   }
 
-  QueryBuilder<TaskCollection, bool, QQueryOperations> isDoneProperty() {
+  QueryBuilder<TaskCollection, bool?, QQueryOperations> isDoneProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isDone');
     });
   }
 
-  QueryBuilder<TaskCollection, String, QQueryOperations> titleProperty() {
+  QueryBuilder<TaskCollection, String?, QQueryOperations> titleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'title');
     });

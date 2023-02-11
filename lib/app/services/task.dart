@@ -17,8 +17,6 @@ class TaskService extends GetxService {
     required this.taskRepository,
   });
 
-  // final RxBool selectedAllTaskCategories = RxBool(true);
-  // final Rx<TaskCategoryCollection?> selectedTaskCategory = Rx(null);
   final Rx<TaskFilter> taskFilter = Rx(TaskFilter(
     type: TaskFilterType.allCategories,
   ));
@@ -39,15 +37,12 @@ class TaskService extends GetxService {
 
   void _read() async {
     taskCategories.value = await taskCategoryRepository.readAll();
-    // tasks.value = await taskRepository.readAll();
   }
 
   void _listen() {
     taskCategoryRepository
         .stream()
         .listen((event) => taskCategories.value = event);
-    // streamSubscriptionTasks =
-    //     taskRepository.stream().listen((event) => tasks.value = event);
   }
 
   void filterTasks() async {

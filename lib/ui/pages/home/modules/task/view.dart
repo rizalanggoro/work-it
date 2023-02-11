@@ -74,7 +74,7 @@ class HomeTaskView extends GetView<HomeTaskController> {
                   return ListTile(
                     onTap: () {},
                     title: Text(
-                      collection.title,
+                      collection.title ?? 'No title',
                       style: TextStyle(
                         color: colorScheme.onBackground,
                       ),
@@ -86,7 +86,9 @@ class HomeTaskView extends GetView<HomeTaskController> {
                       ),
                     ),
                     trailing: IconButton(
-                      onPressed: () {},
+                      onPressed: () => controller.doneTask(
+                        collection: collection,
+                      ),
                       icon: const Icon(Icons.check_rounded),
                     ),
                   );
