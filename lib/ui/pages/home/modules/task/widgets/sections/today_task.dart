@@ -40,7 +40,9 @@ class HomeTaskTodayTaskSection extends GetView<HomeTaskController> {
 
               return ListTile(
                 contentPadding: ConstantValues.listTileContentPadding,
-                onTap: () {},
+                onTap: () => controller.toDetailTask(
+                  collection: collection,
+                ),
                 title: Text(
                   collection.title ?? 'No task title',
                   style: TextStyle(

@@ -70,7 +70,13 @@ class HomeTaskView extends GetView<HomeTaskController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const HomeTaskCardDoneTaskWidget(),
-            const HomeTaskNoDueDateTaskSection(),
+            ObxValue(
+              (noDueTasks) => ConditionalWidget(
+                body: const HomeTaskNoDueDateTaskSection(),
+                showIf: noDueTasks.isNotEmpty,
+              ),
+              controller.taskService.noDueTasks,
+            ),
             ObxValue(
               (tasks) => ConditionalWidget(
                 body: const HomeTaskTodayTaskSection(),

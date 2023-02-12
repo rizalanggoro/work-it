@@ -7,6 +7,8 @@ import 'package:work_it/ui/pages/create_transaction_category/binding.dart';
 import 'package:work_it/ui/pages/create_transaction_category/view.dart';
 import 'package:work_it/ui/pages/create_wallet/binding.dart';
 import 'package:work_it/ui/pages/create_wallet/view.dart';
+import 'package:work_it/ui/pages/detail_task/binding.dart';
+import 'package:work_it/ui/pages/detail_task/view.dart';
 import 'package:work_it/ui/pages/detail_transaction/binding.dart';
 import 'package:work_it/ui/pages/detail_transaction/view.dart';
 import 'package:work_it/ui/pages/home/binding.dart';
@@ -40,6 +42,7 @@ abstract class Routes {
   static const manageTaskCompleted = '/manage-task-completed';
 
   static const detailTransaction = '/detail-transaction';
+  static const detailTask = '/detail-task';
 
   static const selectTransactionCategory = '/select-transaction-category';
 
@@ -105,6 +108,11 @@ abstract class Routes {
       name: detailTransaction,
       page: () => const DetailTransactionView(),
       binding: DetailTransactionBinding(),
+    ),
+    GetPage(
+      name: detailTask,
+      page: () => const DetailTaskView(),
+      binding: DetailTaskBinding(),
     ),
 
     // todo: select

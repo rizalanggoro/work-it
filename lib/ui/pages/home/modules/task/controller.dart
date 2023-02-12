@@ -33,6 +33,14 @@ class HomeTaskController extends GetxController {
     Get.toNamed(Routes.manageTaskCategory);
   }
 
+  void toDetailTask({
+    required TaskCollection collection,
+  }) =>
+      Get.toNamed(
+        Routes.detailTask,
+        arguments: collection,
+      );
+
   void showBottomSheetSelectCategory(BuildContext context) {
     showModalBottomSheet(
       context: context,
