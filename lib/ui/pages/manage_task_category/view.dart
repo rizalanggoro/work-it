@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_it/ui/pages/manage_task_category/controller.dart';
 import 'package:work_it/ui/pages/manage_task_category/views/bottom_sheet_create.dart';
+import 'package:work_it/ui/utils/ui_utils.dart';
 
 class ManageTaskCategoryView extends GetView<ManageTaskCategoryController> {
   const ManageTaskCategoryView({super.key});
@@ -12,7 +13,9 @@ class ManageTaskCategoryView extends GetView<ManageTaskCategoryController> {
     final textTheme = context.textTheme;
 
     return Scaffold(
+      backgroundColor: UIUtils.backgroundColor(context),
       appBar: AppBar(
+        backgroundColor: UIUtils.backgroundColor(context),
         title: const Text('Task Category'),
       ),
       floatingActionButton: FloatingActionButton(

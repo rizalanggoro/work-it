@@ -5,6 +5,7 @@ import 'package:work_it/ui/pages/home/modules/dashboard/view.dart';
 import 'package:work_it/ui/pages/home/modules/profile/view.dart';
 import 'package:work_it/ui/pages/home/modules/task/view.dart';
 import 'package:work_it/ui/pages/home/modules/transaction/view.dart';
+import 'package:work_it/ui/utils/ui_utils.dart';
 
 class _NavItem {
   final String title;
@@ -47,8 +48,10 @@ class HomeView extends GetView<HomeController> {
     ];
 
     return Scaffold(
+      backgroundColor: UIUtils.backgroundColor(context),
       bottomNavigationBar: ObxValue(
         (navigationIndex) => NavigationBar(
+          backgroundColor: UIUtils.backgroundColor(context),
           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           selectedIndex: navigationIndex.value,
           destinations: [

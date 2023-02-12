@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_it/ui/pages/manage_transaction_category/controller.dart';
+import 'package:work_it/ui/utils/ui_utils.dart';
 
 class ManageTransactionCategoryView
     extends GetView<ManageTransactionCategoryController> {
@@ -12,7 +13,9 @@ class ManageTransactionCategoryView
     var textTheme = context.textTheme;
 
     return Scaffold(
+      backgroundColor: UIUtils.backgroundColor(context),
       appBar: AppBar(
+        backgroundColor: UIUtils.backgroundColor(context),
         title: const Text('Category'),
       ),
       floatingActionButton: FloatingActionButton(

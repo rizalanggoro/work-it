@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:work_it/ui/pages/create_wallet/controller.dart';
+import 'package:work_it/ui/utils/ui_utils.dart';
 
 class CreateWalletView extends GetView<CreateWalletController> {
   const CreateWalletView({super.key});
@@ -12,7 +13,9 @@ class CreateWalletView extends GetView<CreateWalletController> {
     var textTheme = context.textTheme;
 
     return Scaffold(
+      backgroundColor: UIUtils.backgroundColor(context),
       appBar: AppBar(
+        backgroundColor: UIUtils.backgroundColor(context),
         title: const Text('Create wallet'),
       ),
       body: SingleChildScrollView(

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:work_it/ui/pages/create_task/controller.dart';
 import 'package:work_it/ui/pages/create_task/views/bottom_sheet_select_category.dart';
+import 'package:work_it/ui/utils/ui_utils.dart';
 import 'package:work_it/ui/values/constant.dart';
 
 class CreateTaskView extends GetView<CreateTaskController> {
@@ -14,7 +15,9 @@ class CreateTaskView extends GetView<CreateTaskController> {
     final textTheme = context.textTheme;
 
     return Scaffold(
+      backgroundColor: UIUtils.backgroundColor(context),
       appBar: AppBar(
+        backgroundColor: UIUtils.backgroundColor(context),
         title: const Text('Create task'),
       ),
       body: SingleChildScrollView(

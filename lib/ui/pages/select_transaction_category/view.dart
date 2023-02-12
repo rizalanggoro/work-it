@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_it/ui/pages/select_transaction_category/controller.dart';
 import 'package:work_it/ui/pages/select_transaction_category/widgets/type.dart';
+import 'package:work_it/ui/utils/ui_utils.dart';
 
 class SelectTransactionCategoryView
     extends GetView<SelectTransactionCategoryController> {
@@ -13,7 +14,9 @@ class SelectTransactionCategoryView
     final colorScheme = context.theme.colorScheme;
 
     return Scaffold(
+      backgroundColor: UIUtils.backgroundColor(context),
       appBar: AppBar(
+        backgroundColor: UIUtils.backgroundColor(context),
         title: const Text('Select category'),
         actions: [
           IconButton(

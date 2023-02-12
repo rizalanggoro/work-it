@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:work_it/ui/pages/create_transaction/controller.dart';
+import 'package:work_it/ui/utils/ui_utils.dart';
 
 class CreateTransactionView extends GetView<CreateTransactionController> {
   const CreateTransactionView({super.key});
@@ -13,7 +14,9 @@ class CreateTransactionView extends GetView<CreateTransactionController> {
     var textTheme = context.textTheme;
 
     return Scaffold(
+      backgroundColor: UIUtils.backgroundColor(context),
       appBar: AppBar(
+        backgroundColor: UIUtils.backgroundColor(context),
         title: const Text('Create Transaction'),
       ),
       body: SingleChildScrollView(

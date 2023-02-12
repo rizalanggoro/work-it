@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_it/ui/pages/home/modules/transaction/controller.dart';
 import 'package:work_it/ui/pages/home/modules/transaction/widgets/grouped_transaction.dart';
+import 'package:work_it/ui/utils/ui_utils.dart';
 
 class HomeTransactionView extends GetView<HomeTransactionController> {
   const HomeTransactionView({super.key});
@@ -12,8 +13,10 @@ class HomeTransactionView extends GetView<HomeTransactionController> {
     var textTheme = context.textTheme;
 
     return Scaffold(
+      backgroundColor: UIUtils.backgroundColor(context),
       appBar: AppBar(
         title: const Text('Transaction'),
+        backgroundColor: UIUtils.backgroundColor(context),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_rounded),

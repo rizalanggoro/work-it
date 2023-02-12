@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:work_it/ui/pages/create_transaction_category/controller.dart';
+import 'package:work_it/ui/utils/ui_utils.dart';
 import 'package:work_it/ui/widgets/conditional_widget.dart';
 
 class CreateTransactionCategoryView
@@ -15,7 +16,9 @@ class CreateTransactionCategoryView
     var transactionTypes = ['Income', 'Spent'];
 
     return Scaffold(
+      backgroundColor: UIUtils.backgroundColor(context),
       appBar: AppBar(
+        backgroundColor: UIUtils.backgroundColor(context),
         title: const Text('Create Category'),
       ),
       body: SingleChildScrollView(

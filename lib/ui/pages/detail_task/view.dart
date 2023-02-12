@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:work_it/ui/pages/detail_task/controller.dart';
+import 'package:work_it/ui/utils/ui_utils.dart';
 import 'package:work_it/ui/values/constant.dart';
 import 'package:work_it/ui/widgets/conditional_widget.dart';
 
@@ -14,7 +15,9 @@ class DetailTaskView extends GetView<DetailTaskController> {
     final textTheme = context.textTheme;
 
     return Scaffold(
+      backgroundColor: UIUtils.backgroundColor(context),
       appBar: AppBar(
+        backgroundColor: UIUtils.backgroundColor(context),
         title: const Text('Detail task'),
         actions: [
           IconButton(

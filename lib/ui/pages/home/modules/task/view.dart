@@ -7,6 +7,7 @@ import 'package:work_it/ui/pages/home/modules/task/widgets/sections/future_task.
 import 'package:work_it/ui/pages/home/modules/task/widgets/sections/no_due_date_task.dart';
 import 'package:work_it/ui/pages/home/modules/task/widgets/sections/past_task.dart';
 import 'package:work_it/ui/pages/home/modules/task/widgets/sections/today_task.dart';
+import 'package:work_it/ui/utils/ui_utils.dart';
 import 'package:work_it/ui/widgets/conditional_widget.dart';
 
 class HomeTaskView extends GetView<HomeTaskController> {
@@ -18,7 +19,9 @@ class HomeTaskView extends GetView<HomeTaskController> {
     final textTheme = context.textTheme;
 
     return Scaffold(
+      backgroundColor: UIUtils.backgroundColor(context),
       appBar: AppBar(
+        backgroundColor: UIUtils.backgroundColor(context),
         toolbarHeight: 80,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
